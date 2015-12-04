@@ -126,6 +126,7 @@ module OAuth2
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
+      Rails.logger.error("PARAMETERS: #{params.inspect}")
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
         headers = params.delete(:headers)
