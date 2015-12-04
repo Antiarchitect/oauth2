@@ -86,7 +86,7 @@ module OAuth2
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength
-      connection.response :logger, ::Logger.new($stdout)
+      connection.response :logger, Rails.logger
 
       url = connection.build_url(url, opts[:params]).to_s
 
@@ -135,7 +135,6 @@ module OAuth2
       else
         opts[:params] = params
       end
-      puts params
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
       fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
